@@ -1,0 +1,175 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "a6fae481-f3e8-4e44-a196-a3d997fe532a": {
+        "id": "a6fae481-f3e8-4e44-a196-a3d997fe532a",
+        "parent": null,
+        "name": "cloudwatch-logs-slack-alerts.js",
+        "type": "JS_LAMBDA",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "cloudwatch-logs-slack-alerts.js",
+        "cursor": {
+          "lineNumber": 79,
+          "column": 17
+        },
+        "config": {
+          "runtime": "nodejs10.x",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": [],
+          "name": "CloudWatch-Logs-Slack-Alerts",
+          "description": "Periodically produce Slack alerts for new CloudWatch logs matching a given pattern, across multiple log groups"
+        },
+        "triggers": [
+          {
+            "resourceName": "cwecloudwatcher",
+            "config": {}
+          }
+        ],
+        "testCases": {
+          "d7bb858e-a4a7-453d-bb71-b70b77c32377": {
+            "id": "d7bb858e-a4a7-453d-bb71-b70b77c32377",
+            "name": "t",
+            "functionId": "a6fae481-f3e8-4e44-a196-a3d997fe532a",
+            "event": "{}",
+            "eventTemplate": "hello-world"
+          }
+        },
+        "customSecurityPolicy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:*"
+                }
+              ],
+              "Action": [
+                "logs:FilterLogEvents"
+              ]
+            }
+          ]
+        }
+      },
+      "0e8903bc-3bf4-4ddc-b833-12a50d43d716": {
+        "id": "0e8903bc-3bf4-4ddc-b833-12a50d43d716",
+        "parent": null,
+        "name": "package.json",
+        "type": "JSON_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "package.json"
+      }
+    },
+    "openFiles": [
+      "a6fae481-f3e8-4e44-a196-a3d997fe532a"
+    ],
+    "currentFileId": "a6fae481-f3e8-4e44-a196-a3d997fe532a",
+    "resources": {
+      "cwecloudwatcher": {
+        "name": "cwecloudwatcher",
+        "type": "CLOUD_WATCH",
+        "config": {
+          "mode": 0,
+          "name": "cloudwatcher",
+          "description": "",
+          "eventBusName": "default",
+          "scheduleExpression": "rate(2 minutes)"
+        }
+      }
+    },
+    "customTemplate": {
+      "dialect": "CloudFormation",
+      "definitions": null
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      },
+      {
+        "lambdaId": "a6fae481-f3e8-4e44-a196-a3d997fe532a",
+        "varKey": "SLACK_WEBHOOK_URL",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": true
+      },
+      {
+        "lambdaId": "a6fae481-f3e8-4e44-a196-a3d997fe532a",
+        "varKey": "SLACK_CHANNEL",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": true
+      },
+      {
+        "lambdaId": "a6fae481-f3e8-4e44-a196-a3d997fe532a",
+        "varKey": "SLACK_USER",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": true
+      },
+      {
+        "lambdaId": "a6fae481-f3e8-4e44-a196-a3d997fe532a",
+        "varKey": "LOG_GROUPS",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": true
+      },
+      {
+        "lambdaId": "a6fae481-f3e8-4e44-a196-a3d997fe532a",
+        "varKey": "LOG_PATTERN",
+        "varValue": "?ERROR ?WARN",
+        "shouldPersist": true,
+        "displayOnly": false,
+        "editable": true
+      },
+      {
+        "lambdaId": "all",
+        "varKey": "POLL_PERIOD_MS",
+        "varValue": "120000",
+        "shouldPersist": true,
+        "displayOnly": false,
+        "editable": true
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {
+        "axios": {
+          "name": "axios",
+          "language": "nodejs",
+          "version": "0.19.0"
+        }
+      }
+    }
+  },
+  "PROJECT_META": {
+    "projectName": "cloudwatch-slack-alerts",
+    "projectDescription": "Slack alerts based on CloudWatch data",
+    "projectVersion": "1.0.0",
+    "projectRegion": "us-east-1",
+    "platform": "AWS",
+    "language": "nodejs",
+    "platformRegions": {},
+    "lastSave": 1588745524916
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "cloudwatch-slack-alerts",
+      "url": "https://github.com/janakaud/cloudwatch-slack-alerts"
+    }
+  }
+}
