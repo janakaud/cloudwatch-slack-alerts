@@ -23,15 +23,13 @@ const username = env("SLACK_USER");
 
 
 const axios = require("axios");
-const https = require("https");
-const httpsAgent = new https.Agent({keepAlive: true});
 
 const postMsg = text => {
 	return axios.post(hook, {
 		channel, username,
 		text,
 		icon_emoji: ":ghost:"
-	}, {httpsAgent});
+	});
 };
 
 
@@ -71,12 +69,12 @@ ${msg}
 		.then(msgs => {
 			let valid = msgs.filter(m => !!m);
 			if (valid.length > 0) {
-				postMsg(`\`${timeStr}\`
+				postMsg(`*${timeStr}*
 
 ${valid.join("\n\n")}`);
 			}
 		})
-		.catch(e => postMsg(`*FAULT* \`${timeStr}\`
+		.catch(e => postMsg(`*FAULT* ${timeStr}
 
 \`\`\`
 ${e.message}

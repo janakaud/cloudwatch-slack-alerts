@@ -11,8 +11,8 @@
         "isRemovable": true,
         "filePath": "cloudwatch-logs-slack-alerts.js",
         "cursor": {
-          "lineNumber": 79,
-          "column": 17
+          "lineNumber": 77,
+          "column": 42
         },
         "config": {
           "runtime": "nodejs10.x",
@@ -163,7 +163,7 @@
     "platform": "AWS",
     "language": "nodejs",
     "platformRegions": {},
-    "lastSave": 1588745524916
+    "lastSave": 1591413396147
   },
   "VCS_STATE": {
     "provider": "GitHub",
