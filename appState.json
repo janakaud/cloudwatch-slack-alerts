@@ -11,8 +11,8 @@
         "isRemovable": true,
         "filePath": "cloudwatch-logs-slack-alerts.js",
         "cursor": {
-          "lineNumber": 77,
-          "column": 42
+          "lineNumber": 66,
+          "column": 1
         },
         "config": {
           "runtime": "nodejs10.x",
@@ -53,7 +53,8 @@
               ]
             }
           ]
-        }
+        },
+        "lastUpdated": 1594641419752
       },
       "0e8903bc-3bf4-4ddc-b833-12a50d43d716": {
         "id": "0e8903bc-3bf4-4ddc-b833-12a50d43d716",
@@ -85,7 +86,8 @@
     },
     "customTemplate": {
       "dialect": "CloudFormation",
-      "definitions": null
+      "definitions": null,
+      "syntax": "JSON"
     },
     "envVariables": [
       {
@@ -143,6 +145,14 @@
         "shouldPersist": true,
         "displayOnly": false,
         "editable": true
+      },
+      {
+        "lambdaId": "all",
+        "varKey": "SLACK_ICON",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": true
       }
     ],
     "packageJSON": {
@@ -156,6 +166,7 @@
     }
   },
   "PROJECT_META": {
+    "sigmaVersion": "1.4.2",
     "projectName": "cloudwatch-slack-alerts",
     "projectDescription": "Slack alerts based on CloudWatch data",
     "projectVersion": "1.0.0",
@@ -163,7 +174,7 @@
     "platform": "AWS",
     "language": "nodejs",
     "platformRegions": {},
-    "lastSave": 1591413396147
+    "lastSave": 1594641748840
   },
   "VCS_STATE": {
     "provider": "GitHub",

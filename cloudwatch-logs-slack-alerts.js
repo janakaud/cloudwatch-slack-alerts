@@ -20,15 +20,15 @@ const filterPattern = env("LOG_PATTERN");
 const hook = env("SLACK_WEBHOOK_URL");
 const channel = env("SLACK_CHANNEL");
 const username = env("SLACK_USER");
+const icon_emoji = env("SLACK_ICON");
 
 
 const axios = require("axios");
 
 const postMsg = text => {
 	return axios.post(hook, {
-		channel, username,
-		text,
-		icon_emoji: ":ghost:"
+		channel, username, icon_emoji,
+		text
 	});
 };
 
