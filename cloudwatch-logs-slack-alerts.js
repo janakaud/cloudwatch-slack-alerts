@@ -52,8 +52,8 @@ exports.handler = async event => {
 				startTime,
 				limit: 100
 			}).promise();
-			msg = data.events.map(e => e.message.substring(0, 1000).trim()).join("\n\n");
-			partial = !!data.nextToken;
+			msg = data.events.map(e => e.message.substring(0, 400).trim()).join("\n\n").substring(0, 4000);
+			partial = !!data.nextToken || msg.length === 4000;
 		} catch (e) {
 			msg = `Failed to poll ${g}; ${e.message}`;
 		}

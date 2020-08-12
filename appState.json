@@ -11,7 +11,7 @@
         "isRemovable": true,
         "filePath": "cloudwatch-logs-slack-alerts.js",
         "cursor": {
-          "lineNumber": 66,
+          "lineNumber": 46,
           "column": 1
         },
         "config": {
@@ -54,7 +54,7 @@
             }
           ]
         },
-        "lastUpdated": 1594641419752
+        "lastUpdated": 1597209473047
       },
       "0e8903bc-3bf4-4ddc-b833-12a50d43d716": {
         "id": "0e8903bc-3bf4-4ddc-b833-12a50d43d716",
