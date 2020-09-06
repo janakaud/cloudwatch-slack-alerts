@@ -40,20 +40,31 @@ exports.handler = async event => {
 	timeStr = timeStr.substring(0, timeStr.indexOf(" "));
 	console.log(timeStr);
 
-    let checks = groups.map(async g => {
+	// throttle 5/sec
+	let inflight = 0;
+	const timer = setInterval(() => inflight = 0, 1000);
+
+	let checks = groups.map(async g => {
 		// if not namespaced, add default Lambda prefix
 		let logGroupName = g.indexOf("/") < 0 ? `/aws/lambda/${g}` : g;
 
 		let msg, partial = true;
 		try {
+			while (inflight >= 5) {	// wait till next window
+				await new Promise(resolve => setTimeout(resolve, 1000));
+			}
+			inflight++;
+
 			let data = await logs.filterLogEvents({
 				logGroupName,
 				filterPattern,
 				startTime,
 				limit: 100
 			}).promise();
-			msg = data.events.map(e => e.message.substring(0, 400).trim()).join("\n\n").substring(0, 4000);
-			partial = !!data.nextToken || msg.length === 4000;
+			let maxLen = 4000 - g.length - 20;
+			msg = data.events.map(e => e.message.substring(0, 300).trim()).join("\n\n").substring(0, maxLen);
+			partial = !!data.nextToken || msg.length === maxLen;
+
 		} catch (e) {
 			msg = `Failed to poll ${g}; ${e.message}`;
 		}
@@ -65,18 +76,21 @@ ${msg}
 	});
 
 	// post gathered logs as one Slack msg
-    return await Promise.all(checks)
+	return await Promise.all(checks)
 		.then(msgs => {
 			let valid = msgs.filter(m => !!m);
-			if (valid.length > 0) {
-				postMsg(`*${timeStr}*
+			if (valid.length === 0) return;
 
-${valid.join("\n\n")}`);
-			}
+			let maxLen = 4000 - timeStr.length - 14;
+			let msg = valid.join("\n\n").substring(0, maxLen);
+			postMsg(`*${timeStr}*${msg.length === maxLen ? " [partial]" : ""}
+
+${msg}`);
 		})
 		.catch(e => postMsg(`*FAULT* ${timeStr}
 
 \`\`\`
 ${e.message}
-\`\`\``));
+\`\`\``))
+		.finally(() => clearInterval(timer));
 };

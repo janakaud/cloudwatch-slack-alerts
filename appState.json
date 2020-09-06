@@ -11,8 +11,8 @@
         "isRemovable": true,
         "filePath": "cloudwatch-logs-slack-alerts.js",
         "cursor": {
-          "lineNumber": 46,
-          "column": 1
+          "lineNumber": 90,
+          "column": 2
         },
         "config": {
           "runtime": "nodejs10.x",
@@ -54,7 +54,7 @@
             }
           ]
         },
-        "lastUpdated": 1597209473047
+        "lastUpdated": 1599403300038
       },
       "0e8903bc-3bf4-4ddc-b833-12a50d43d716": {
         "id": "0e8903bc-3bf4-4ddc-b833-12a50d43d716",
@@ -166,7 +166,7 @@
     }
   },
   "PROJECT_META": {
-    "sigmaVersion": "1.4.2",
+    "sigmaVersion": "1.4.3",
     "projectName": "cloudwatch-slack-alerts",
     "projectDescription": "Slack alerts based on CloudWatch data",
     "projectVersion": "1.0.0",
