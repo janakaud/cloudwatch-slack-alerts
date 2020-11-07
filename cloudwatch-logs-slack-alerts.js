@@ -26,23 +26,26 @@ const icon_emoji = env("SLACK_ICON");
 const axios = require("axios");
 
 const postMsg = text => {
+	console.log(text);
 	return axios.post(hook, {
 		channel, username, icon_emoji,
 		text
 	});
 };
 
+const pad = val => val < 10 ? `0${val}` : val;
+
 
 exports.handler = async event => {
 	const startTime = Date.now() - period;
 
-	let timeStr = new Date(startTime).toTimeString();
+	let t = new Date(startTime);
+	let timeStr = t.toTimeString();
 	timeStr = timeStr.substring(0, timeStr.indexOf(" "));
 	console.log(timeStr);
 
-	// throttle 5/sec
-	let inflight = 0;
-	const timer = setInterval(() => inflight = 0, 1000);
+	//FIXME we lose logs at date boundaries
+	let logStreamNamePrefix = `${t.getFullYear()}/${pad(t.getMonth() + 1)}/${pad(t.getDate())}/[$LATEST]`;
 
 	let checks = groups.map(async g => {
 		// if not namespaced, add default Lambda prefix
@@ -50,14 +53,10 @@ exports.handler = async event => {
 
 		let msg, partial = true;
 		try {
-			while (inflight >= 5) {	// wait till next window
-				await new Promise(resolve => setTimeout(resolve, 1000));
-			}
-			inflight++;
-
 			let data = await logs.filterLogEvents({
 				logGroupName,
 				filterPattern,
+				logStreamNamePrefix,
 				startTime,
 				limit: 100
 			}).promise();
@@ -76,14 +75,14 @@ ${msg}
 	});
 
 	// post gathered logs as one Slack msg
-	return await Promise.all(checks)
+	await Promise.all(checks)
 		.then(msgs => {
 			let valid = msgs.filter(m => !!m);
 			if (valid.length === 0) return;
 
 			let maxLen = 4000 - timeStr.length - 14;
 			let msg = valid.join("\n\n").substring(0, maxLen);
-			postMsg(`*${timeStr}*${msg.length === maxLen ? " [partial]" : ""}
+			return postMsg(`*${timeStr}*${msg.length === maxLen ? " [partial]" : ""}
 
 ${msg}`);
 		})
@@ -92,5 +91,4 @@ ${msg}`);
 \`\`\`
 ${e.message}
 \`\`\``))
-		.finally(() => clearInterval(timer));
 };
